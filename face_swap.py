@@ -17,7 +17,7 @@ def face_swap(file_path):
     predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 
     your_face_faces = detector(gray_your_face)
-    if len(your_face_faces < 1):
+    if len(your_face_faces) < 1:
         return "result_uploads/SUNWUKONG.png"
     your_landmarks = predictor(gray_your_face, your_face_faces[0])
 
