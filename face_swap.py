@@ -17,6 +17,8 @@ def face_swap(file_path):
     predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 
     your_face_faces = detector(gray_your_face)
+    if len(your_face_faces < 1):
+        return "result_uploads/SUNWUKONG.png"
     your_landmarks = predictor(gray_your_face, your_face_faces[0])
 
     mask = np.zeros_like(gray_your_face)
@@ -32,17 +34,12 @@ def face_swap(file_path):
         xmin = min(xmin, x_part)
         ymin = min(ymin, y_part)
         
-    print(xmin, xmax, ymin, ymax)
-
-
     pw = xmax - xmin
     ph = ymax - ymin
     center = (w // 2, h // 2)
 
     part_image = your_face_image[ymin - (int)(0.38 * ph): ymax + (int)(0.16 * ph), xmin - (int)(0.3 * pw): xmax + (int)(0.22 * pw), ]
     your_face_resized = cv2.resize(part_image, (w, h))
-
-    print(your_face_resized.shape, sun_wukong_face_image.shape, sun_wukong_face_mask.shape, center)
 
     composite_image = cv2.seamlessClone(your_face_resized, sun_wukong_face_image, sun_wukong_face_mask, center, cv2.NORMAL_CLONE)
 
